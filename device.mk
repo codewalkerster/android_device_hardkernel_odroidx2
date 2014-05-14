@@ -209,8 +209,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media_codecs.xml:system/etc/media_codecs.xml
 
 PRODUCT_COPY_FILES += \
-	device/hardkernel/drivers/rt5370sta.ko:system/lib/modules/rt5370sta.ko \
-	device/hardkernel/drivers/rt5370sta.cal:system/etc/firmware/rt5370sta.cal 
+	device/hardkernel/odroidx2/drivers/rt5370sta.ko:system/lib/modules/rt5370sta.ko \
+	device/hardkernel/odroidx2/drivers/rt5370sta.cal:system/etc/firmware/rt5370sta.cal 
 
 PRODUCT_COPY_FILES += \
 	device/hardkernel/drivers/rtl8191su_x.ko:system/lib/modules/rtl8191su.ko \
