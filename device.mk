@@ -279,3 +279,6 @@ PRODUCT_COPY_FILES += \
 	device/hardkernel/proprietary/lib/libffmpeg_dice.so:system/lib/libffmpeg_dice.so \
 	device/hardkernel/proprietary/lib/libsonic.so:system/lib/libsonic.so
 
+# init.d support
+PRODUCT_COPY_FILES += \
+	device/hardkernel/proprietary/bin/sysinit:system/bin/sysinit
