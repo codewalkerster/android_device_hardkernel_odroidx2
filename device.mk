@@ -82,7 +82,7 @@ PRODUCT_COPY_FILES += \
 #
 PRODUCT_COPY_FILES += \
 	device/hardkernel/odroidx2/drivers/smsc95xx_x.ko:system/lib/modules/smsc95xx.ko \
-	device/hardkernel/odroidu/drivers/ax88179_178a_x.ko:system/lib/modules/ax88179_178a.ko
+	device/hardkernel/odroidx2/drivers/ax88179_178a_x.ko:system/lib/modules/ax88179_178a.ko
 
 #
 # UVC Module
