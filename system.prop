@@ -2,8 +2,10 @@
 # system.prop for odroidx2
 #
 
-#ro.build.version.sc1=V2.0.1
-
-ro.zygote.disable_gl_preload=true
-mouse.right.click=back
+#rild.libpath=/system/lib/libmbm-ril.so
+#rild.libargs=-d /dev/ttyACM0
+#
+ro.sf.lcd_density=160
+#ro.sf.hwrotation=0
 ro.sf.hdmirotation=0
+mouse.right.click=back

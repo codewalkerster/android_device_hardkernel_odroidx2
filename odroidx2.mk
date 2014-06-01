@@ -14,17 +14,23 @@
 
 #
 # This file is the build configuration for a full Android
-# build for smdk4412 hardware. This cleanly combines a set of
+# build for smdk4x12 hardware. This cleanly combines a set of
 # device-specific aspects (drivers) with a device-agnostic
 # product configuration (apps).
 #
 
+
 # Live Wallpapers
 PRODUCT_PACKAGES += \
-        LiveWallpapers \
-        LiveWallpapersPicker \
-        VisualizationWallpapers \
-        librs_jni
+	Galaxy4 \
+	HoloSpiralWallpaper \
+	NoiseField \
+	PhaseBeam \
+	LiveWallpapers \
+	LiveWallpapersPicker \
+	MagicSmokeWallpapers \
+	VisualizationWallpapers \
+	librs_jni
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
@@ -35,6 +41,6 @@ $(call inherit-product, device/hardkernel/odroidx2/device.mk)
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := odroidx2
 PRODUCT_DEVICE := odroidx2
-PRODUCT_MANUFACTURER := HARDKERNEL Co., Ltd.
+PRODUCT_MANUFACTURER := Hardkernel
 PRODUCT_BRAND := Android
 PRODUCT_MODEL := ODROID-X2

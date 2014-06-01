@@ -1,14 +1,12 @@
-on init
-    write /sys/class/android_usb/android0/f_rndis/manufacturer Hardkernel
-    write /sys/class/android_usb/android0/f_rndis/vendorID 18d1
-    write /sys/class/android_usb/android0/f_rndis/wceis 1
-
 on boot
     write /sys/class/android_usb/android0/iManufacturer "Odroid  "
     write /sys/class/android_usb/android0/iProduct "Odroid  "
     write /sys/class/android_usb/android0/iSerial "BABABEEFBABABEEF"
     write /sys/class/android_usb/android0/f_mass_storage/inquiry_string "Odroid Disk     "
-    
+    write /sys/class/android_usb/android0/f_rndis/manufacturer Hardkernel
+    write /sys/class/android_usb/android0/f_rndis/vendorID 18d1
+    write /sys/class/android_usb/android0/f_rndis/wceis 1
+
 on property:sys.usb.config=mass_storage
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 18d1

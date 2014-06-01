@@ -1,54 +1,54 @@
 import init.odroidx2.usb.rc
-
-on init
-
-    mkdir /mnt/shell/emulated 0700 shell shell
-    mkdir /storage/emulated 0555 root root
-    mkdir /storage/sdcard0/.android_secure 0775 system system
-
-    mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
-    mkdir /storage/sdcard0 0700 root root
-
-    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-    mkdir /storage/sdcard1 0700 root root
-
-    mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
-    mkdir /storage/usbdisk 0700 root root
-   
-    
-    export EXTERNAL_STORAGE /storage/sdcard0
-    export SECONDARY_STORAGE /storage/sdcard1:/storage/usbdisk
-
-    # for backwards compatibilit
-    symlink /storage/sdcard0 /sdcard
-    symlink /storage/sdcard0 /mnt/sdcard
-    symlink /storage/sdcard1 /extSdCard
-    symlink /storage/sdcard1 /mnt/extSdCard
-    symlink /storage/usbdisk /usbdisk
-
-    on post-fs-data
-    mkdir /data/media 0770 media_rw media_rw
-
-    setprop vold.post_fs_data_done 1
+on early-init
+    export EXTERNAL_STORAGE /mnt/sdcard
+    export SECONDARY_STORAGE /mnt/ext_sd
+    mkdir /mnt/sdcard 0000 system system
+    symlink /mnt/sdcard /sdcard
+    mkdir /mnt/ext_sd 0000 system system	
+    mkdir /mnt/ext_usb 0000 system system	
 
 on boot
-    mount debugfs /sys/kernel/debug /sys/kernel/debug
+    setprop ro.build.product odroidx2
+    setprop ro.product.device odroidx2
     setprop ro.radio.noril yes
-
-    # Reduce reserved lowmem from ~48MB to ~12MB
-    write /proc/sys/vm/lowmem_reserve_ratio "128 128"
-
-    # Set up kernel tracing, but disable it by default
-    chmod 0222 /sys/kernel/debug/tracing/trace_marker
-    write /sys/kernel/debug/tracing/tracing_on 0
+    setprop ro.kernel.android.ril 0
+    setprop ril.work 0
 
 # Run sysinit
     start sysinit
 
 on fs
-    mount_all /fstab.odroidx2
-    setprop ro.crypto.fuse_sdcard true
+    mount ext4 /dev/block/mmcblk0p2 /system rw wait
+#   mount ext4 /dev/block/mmcblk0p3 /data wait nosuid nodev noatime nomblk_io_submit
+    mount ext4 /dev/block/mmcblk0p3 /data nosuid nodev noatime wait usedm discard,noauto_da_alloc,nodelalloc
+    mount ext4 /dev/block/mmcblk0p4 /cache wait nosuid nodev noatime nomblk_io_submit
+    mount usbfs none /proc/bus/usb -o devmode=0666
+# jmq.disable
 
+	#===================================================================
+	#
+	# permissions for bluetooth Mac address
+	#
+	#===================================================================
+	chown bluetooth bluetooth /system/etc/bluetooth
+	chmod 755 /system/etc/bluetooth
+
+# Permissions for backlight
+    chmod 0665 /sys/class/backlight/pwm-backlight.0/brightness
+    chown system system /sys/class/backlight/pwm-backlight.0/brightness
+# Permissions for btpower
+#    chown system system /sys/devices/platform/bt-sysfs/bt_power
+
+	#===================================================================
+	#
+	# ARM Streamline debugger(ARM-DS5)
+	#
+	#===================================================================
+	mkdir /data/gatord 0777 system system
+    copy /system/bin/gatord /data/gatord/gatord
+    chmod 0777 /data/gatord/gatord
+
+on post-fs-data
 	#===================================================================
 	#
 	# wi-fi post data
@@ -62,6 +62,9 @@ on fs
 	setprop wifi.interface "wlan0"
 	setprop wlan.interface "wlan0"
 	setprop wlan.driver.status "ok"
+#    setprop ro.crypto.fuse_sdcard true
+
+    stop ril-daemon
 
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     chmod 0666	/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
@@ -70,99 +73,33 @@ on fs
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chmod 0666	/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 
-
-on post-fs-data
-    # we will remap this as /mnt/sdcard with the sdcard fuse tool
-    mkdir /data/media 0775 media_rw media_rw
-
-# Permissions for backlight
-    chown system system /sys/class/backlight/pwm-backlight.0/brightness
-    chmod 0666 /sys/class/backlight/pwm-backlight.0/brightness
-    
-on post-fs-data
-
-   setprop vold.post_fs_data_done 1
-    
-# su daemon
-service su_daemon /system/xbin/su --daemon
+#===================================================================
+#
+# ARM Streamline debugger Service
+#
+#===================================================================
+service gator_module /system/bin/insmod /system/lib/modules/gator.ko
     class core
     user root
     group root
     oneshot
 
-# virtual sdcard daemon running as media_rw (1023)
-
-service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
-    class late_start
-
-service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
-    class late_start
-    disabled
-
-service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
-    class late_start
-    disabled
-    
-service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
-    class late_start
-    disabled
-
-# create filesystem if necessary
-service setup_fs /system/bin/setup_fs \
-    mmcblk0p3 \
-    mmcblk0p4
-    class core
+service gator_daemon /data/gatord/gatord
+    class main
     user root
     group root
-    oneshot
 
-service wpa_supplicant /system/bin/wpa_supplicant \
-    -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf \
-    -O/data/misc/wifi/sockets \
-    -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
-    #   we will start as root and wpa_supplicant will switch to user wifi
-    #   after setting up the capabilities required for WEXT
-    #   user wifi
-    #   group wifi inet keystore
-    class main
-    socket wpa_wlan0 dgram 660 wifi wifi
-    disabled
-    oneshot
-
-service dhcpcd_wlan0 /system/bin/dhcpcd -aABDKL
-    class main
-    disabled
-    oneshot
-
-service iprenew_wlan0 /system/bin/dhcpcd -n
-    class main
-    disabled
-    oneshot
-
-# eth0
-service dhcpcd_eth0 /system/bin/dhcpcd -ABDKL
-    class main
-    disabled
-    oneshot
-
-# IP Renew
-# eth0 
-service iprenew_eth0 /system/bin/dhcpcd -n
-    class main
-    disabled
-    oneshot
-
-service insmod_ax88179 /system/bin/insmod /system/lib/modules/ax88179_178a.ko
-    class core
-    user root
-    group root
-    oneshot
-  
 service insmod_smsc95xx /system/bin/insmod /system/lib/modules/smsc95xx.ko    
     class core
     user root
     group root
     disabled
+    oneshot
+
+service insmod_ax88179 /system/bin/insmod /system/lib/modules/ax88179_178a.ko    
+    class core
+    user root
+    group root
     oneshot
 
 service uvc_usb_module /system/bin/insmod /system/lib/modules/uvcvideo.ko    
@@ -184,11 +121,63 @@ service insmod_usb_audio /system/bin/insmod /system/lib/modules/snd-usb-audio.ko
     disabled
     oneshot
 
+on property:init.svc.insmod_ax88179=stopped
+    start insmod_smsc95xx
+
 on property:init.svc.insmod_usbmidi=stopped
     start insmod_usb_audio
 
-on property:init.svc.insmod_ax88179=stopped
-    start insmod_smsc95xx
+# create filesystem if necessary
+service setup_fs /system/bin/setup_fs \
+            /dev/block/mmcblk0p3 \
+            /dev/block/mmcblk0p4
+    class core
+    user root
+    group root
+    oneshot
+
+#===================================================================
+#
+# WIFI wpa suppplicant service
+#
+#===================================================================
+service wpa_supplicant /system/bin/wpa_supplicant -Dwext -iwlan0 -c /data/misc/wifi/wpa_supplicant.conf
+	class main
+    socket wpa_wlan0 dgram 0660 wifi wifi
+	disabled
+	oneshot
+
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
+	class main
+	disabled
+	oneshot
+
+service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
+	class main
+	disabled
+	oneshot
+
+service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
+	class main
+	disabled
+	oneshot
+
+service iprenew_wlan0 /system/bin/dhcpcd -n
+	class main
+	disabled
+	oneshot
+
+service iprenew_bnep0 /system/bin/dhcpcd -n
+	class main
+	disabled
+	oneshot
+
+# IP Renew
+# eth0 
+service iprenew_eth0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
 
 # sysinit (/system/etc/init.d)
 service sysinit /system/bin/sysinit
