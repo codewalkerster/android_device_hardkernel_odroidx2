@@ -81,8 +81,10 @@ Only the three quirks included above are recognized at this point:
         <MediaCodec name="OMX.SEC.H263.Decoder" type="video/3gpp" />
         <MediaCodec name="OMX.SEC.AVC.Decoder" type="video/avc" />
         <MediaCodec name="OMX.SEC.FP.AVC.Decoder" type="video/avc" />
+	<!--
         <MediaCodec name="OMX.SEC.MPEG2.Decoder" type="video/mpeg2" />
         <MediaCodec name="OMX.SEC.WMV.Decoder" type="video/vc1" />
+	-->
 	<!--        <MediaCodec name="OMX.SEC.MP3.Decoder" >
           <Type name="audio/mpeg" />
           <Quirk name="supports-multiple-frames-per-inputbuffer" />
@@ -100,9 +102,13 @@ Only the three quirks included above are recognized at this point:
         <MediaCodec name="OMX.google.mpeg4.decoder" type="video/mp4v-es" />
         <MediaCodec name="OMX.google.h263.decoder" type="video/3gpp" />
         <MediaCodec name="OMX.google.h264.decoder" type="video/avc" />
+	<MediaCodec name="OMX.google.vp8.decoder" type="video/x-vnd.on2.vp8"/>
+	<MediaCodec name="OMX.google.vp9.decoder" type="video/x-vnd.on2.vp9"/>
+	<!--
         <MediaCodec name="OMX.google.vpx.decoder" type="video/x-vnd.on2.vp8" />
         <MediaCodec name="FfmpegVideoDecoder" type="video/ffmpeg" />
         <MediaCodec name="FfmpegAudioDecoder" type="audio/ffmpeg" />
+	-->
     </Decoders>
 
     <Encoders>
