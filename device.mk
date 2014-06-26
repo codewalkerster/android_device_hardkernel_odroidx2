@@ -27,6 +27,11 @@ KERNEL_DIR ?= ../kernel
 
 include $(LOCAL_PATH)/BoardConfig.mk
 
+include device/rockchip/common/phone/rk30_phone.mk
+# Get the long list of APNs
+PRODUCT_COPY_FILES += device/rockchip/common/phone/etc/apns-full-conf.xml:system/etc/apns-conf.xml
+PRODUCT_COPY_FILES += device/rockchip/common/phone/etc/spn-conf.xml:system/etc/spn-conf.xml
+
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
 ifeq ($(BOARD_USES_HGL),true)
@@ -69,6 +74,10 @@ PRODUCT_PACKAGES += \
 	make_ext4fs \
 	setup_fs
 
+#3G Modem	
+PRODUCT_PACKAGES += \
+        rild
+       
 # audio
 PRODUCT_PACKAGES += \
 	audio_policy.$(TARGET_PRODUCT) \
@@ -147,6 +156,7 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
 	frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
 	frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
+        frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
 	packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
 
 # The OpenGL ES API level that is natively supported by this device.

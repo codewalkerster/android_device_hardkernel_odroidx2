@@ -48,3 +48,6 @@
 /dev/bus/usb/001/008	0777	root	usb
 /dev/bus/usb/001/009	0777	root	usb
 /dev/bus/usb/001/010	0777	root	usb
+
+#3G Modem
+/dev/ttyUSB*	0666	radio	radio	
