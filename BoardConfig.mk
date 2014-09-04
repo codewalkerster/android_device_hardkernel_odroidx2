@@ -49,8 +49,8 @@ BOARD_USE_S5K3H2 := true
 BOARD_USE_USBCAM := false
 BOARD_USE_S5K4H5 := false
 
-BOARD_USES_CAMERA_LIB 	:= odroid
-BOARD_USES_CAMERA_IF 	:= uvc_video
+BOARD_USES_CAMERA_LIB := odroid
+BOARD_USES_CAMERA_IF := uvc_video
 
 # Enable JIT
 WITH_JIT := true
@@ -114,17 +114,17 @@ BOARD_SUPPORT_EXTERNAL_GPS := true
 #
 # ralink module = rt5370sta, realtek = rtl8191su
 #
-BOARD_WIFI_VENDOR	:= realtek
-BOARD_WLAN_DEVICE	:= rtl819xxu
+BOARD_WIFI_VENDOR := realtek
+BOARD_WLAN_DEVICE := rtl819xxu
 
 WPA_SUPPLICANT_VERSION              := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER         := WEXT
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd_rtl
-WIFI_DRIVER_MODULE_NAME		        := "rtl8191su"
+WIFI_DRIVER_MODULE_NAME             := "rtl8191su"
 WIFI_DRIVER_MODULE_PATH             := "/system/lib/modules/rtl8191su.ko"
-WIFI_DRIVER_MODULE_NAME2	        := "rtl8192cu"
+WIFI_DRIVER_MODULE_NAME2            := "rtl8192cu"
 WIFI_DRIVER_MODULE_PATH2            := "/system/lib/modules/rtl8192cu.ko"
-WIFI_DRIVER_MODULE_NAME3		    := "rt5370sta"
+WIFI_DRIVER_MODULE_NAME3            := "rt5370sta"
 WIFI_DRIVER_MODULE_PATH3            := "/system/lib/modules/rt5370sta.ko"
 
 # Realtek driver has FW embedded inside, and will automatically load FW
