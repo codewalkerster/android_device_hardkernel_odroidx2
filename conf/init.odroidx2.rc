@@ -183,6 +183,15 @@ on property:init.svc.insmod_usbmidi=stopped
 on property:init.svc.insmod_ax88179=stopped
     start insmod_smsc95xx
 
+
+service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
+    disabled
+    oneshot
+
+service iprenew_bt-pan /system/bin/dhcpcd -n
+    disabled
+    oneshot
+
 # sysinit (/system/etc/init.d)
 service sysinit /system/bin/sysinit
     user root

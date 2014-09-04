@@ -49,5 +49,11 @@
 /dev/bus/usb/001/009	0777	root	usb
 /dev/bus/usb/001/010	0777	root	usb
 
+# for bluetooth nodes
+/dev/uhid                 0660    bluetooth bluetooth
+
+# bluetooth device
+/dev/bus/usb/001/005      0660    bluetooth bluetooth
+
 #3G Modem
 /dev/ttyUSB*	0666	radio	radio	

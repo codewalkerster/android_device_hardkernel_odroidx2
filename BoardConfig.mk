@@ -32,6 +32,16 @@ USE_ULP_AUDIO := false
 # ALP Audio
 BOARD_USE_ALP_AUDIO := false
 
+
+#
+# Bluetooth
+#
+BOARD_HAVE_BLUETOOTH := true
+BLUETOOTH_HCI_USE_USB := true
+BOARD_HAVE_BLUETOOTH_BCM := true
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/hardkernel/odroidu/bluetooth
+BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
+
 # SEC Camera
 USE_SEC_CAMERA := false
 CAMERA_USE_DIGITALZOOM := true
