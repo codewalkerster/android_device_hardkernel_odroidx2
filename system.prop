@@ -10,3 +10,9 @@ ro.sf.hdmirotation=0
 ro.ril.ecclist=112,911
 rild.libpath=/system/lib/libril-rk29-dataonly.so
 rild.libargs=-d /dev/ttyUSB0
+
+#GPS
+# support BAUD rate 4800, 9600
+ro.kernel.android.gps=/dev/ttyACM0
+ro.kernel.android.gps.speed=9600
+#ro.kernel.android.gps.speed=4800
