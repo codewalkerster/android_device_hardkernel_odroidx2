@@ -217,6 +217,10 @@ PRODUCT_COPY_FILES += \
     device/hardkernel/odroidx2/drivers/rt5370sta.cal:system/etc/firmware/rt5370sta.cal
 
 PRODUCT_COPY_FILES += \
+    device/hardkernel/odroidx2/drivers/rt5572sta.ko:system/lib/modules/rt5572sta.ko \
+    device/hardkernel/odroidx2/drivers/RT2870STA.dat:/system/etc/Wireless/RT2870STA/RT2870STA.dat
+
+PRODUCT_COPY_FILES += \
     device/hardkernel/odroidx2/drivers/rtl8191su.ko:system/lib/modules/rtl8191su.ko \
     device/hardkernel/odroidx2/drivers/rtl8192cu.ko:system/lib/modules/rtl8192cu.ko
 

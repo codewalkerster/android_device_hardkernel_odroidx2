@@ -126,6 +126,8 @@ WIFI_DRIVER_MODULE_NAME2            := "rtl8192cu"
 WIFI_DRIVER_MODULE_PATH2            := "/system/lib/modules/rtl8192cu.ko"
 WIFI_DRIVER_MODULE_NAME3            := "rt5370sta"
 WIFI_DRIVER_MODULE_PATH3            := "/system/lib/modules/rt5370sta.ko"
+WIFI_DRIVER_MODULE_NAME4            := "rt5572sta"
+WIFI_DRIVER_MODULE_PATH4            := "/system/lib/modules/rt5572sta.ko"
 
 # Realtek driver has FW embedded inside, and will automatically load FW
 # at NIC initialization process. So there is no need to set these 
