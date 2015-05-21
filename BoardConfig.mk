@@ -114,20 +114,16 @@ BOARD_SUPPORT_EXTERNAL_GPS := true
 #
 # ralink module = rt5370sta, realtek = rtl8191su
 #
-BOARD_WIFI_VENDOR := realtek
-BOARD_WLAN_DEVICE := rtl819xxu
+WIFI_DRIVER          := rtl8192cu
+BOARD_WIFI_VENDOR    := realtek
+BOARD_WLAN_DEVICE    := rtl8192cu
 
 WPA_SUPPLICANT_VERSION              := VER_0_8_X
-BOARD_WPA_SUPPLICANT_DRIVER         := WEXT
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd_rtl
-WIFI_DRIVER_MODULE_NAME             := "rtl8191su"
-WIFI_DRIVER_MODULE_PATH             := "/system/lib/modules/rtl8191su.ko"
-WIFI_DRIVER_MODULE_NAME2            := "rtl8192cu"
-WIFI_DRIVER_MODULE_PATH2            := "/system/lib/modules/rtl8192cu.ko"
-WIFI_DRIVER_MODULE_NAME3            := "rt5370sta"
-WIFI_DRIVER_MODULE_PATH3            := "/system/lib/modules/rt5370sta.ko"
-WIFI_DRIVER_MODULE_NAME4            := "rt5572sta"
-WIFI_DRIVER_MODULE_PATH4            := "/system/lib/modules/rt5572sta.ko"
+BOARD_WPA_SUPPLICANT_DRIVER         := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd_nl80211
+WIFI_DRIVER_MODULE_NAME             := rtl8192cu
+WIFI_DRIVER_MODULE_PATH             := /system/lib/modules/8192cu.ko
+
 
 # Realtek driver has FW embedded inside, and will automatically load FW
 # at NIC initialization process. So there is no need to set these 

@@ -258,3 +258,8 @@ PRODUCT_COPY_FILES += \
 # init.d support
 PRODUCT_COPY_FILES += \
     device/hardkernel/proprietary/bin/sysinit:system/bin/sysinit
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rt5370sta.cal:system/etc/firmware/rt5370sta.cal \
+    $(LOCAL_PATH)/rt2870.bin:system/etc/firmware/rt2870.bin \
+    $(LOCAL_PATH)/wifi_id_list.txt:system/etc/wifi_id_list.txt
