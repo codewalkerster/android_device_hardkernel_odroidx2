@@ -196,3 +196,9 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
 service sysinit /system/bin/sysinit
     user root
     oneshot
+
+service ups /system/bin/ups2.sh
+    class core
+    user root
+    group root
+    oneshot

@@ -259,6 +259,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/hardkernel/proprietary/bin/sysinit:system/bin/sysinit
 
+# ups2.sh
+PRODUCT_COPY_FILES += \
+    device/hardkernel/odroidu/ups2.sh:system/bin/ups2.sh
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rt5370sta.cal:system/etc/firmware/rt5370sta.cal \
     $(LOCAL_PATH)/rt2870.bin:system/etc/firmware/rt2870.bin \
